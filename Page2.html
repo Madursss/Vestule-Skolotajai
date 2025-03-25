@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezultātu lapa</title>
+    <script>
+        // Function to delay the display of the first image
+        function displayFirstImage() {
+            document.getElementById("firstImage").style.display = "block";
+        }
+
+        // Function to show the text box after 1 more second
+        function displayTextBox() {
+            document.getElementById("textBox").style.display = "flex";
+        }
+
+        // Function to start the slideshow
+        function startSlideshow() {
+            document.getElementById("textBox").style.display = "none"; // Hide text box
+            document.getElementById("firstImage").style.display = "none"; // Hide first image
+            document.getElementById("slideshowImage").style.display = "block"; // Show slideshow image
+
+            const images = [
+                'Elements/2nd.jpeg',
+                'Elements/3rd.jpeg',
+                'Elements/4th.jpeg',
+                'Elements/5th.jpg'
+            ];
+            let index = 0;
+
+            const slideshowInterval = setInterval(() => {
+                if (index < images.length) {
+                    document.getElementById("slideshowImage").src = images[index];
+                    index++;
+                } else {
+                    clearInterval(slideshowInterval); // Stop slideshow after all images
+                    setTimeout(displayBoomImage, 2000); // Show "BOOM.jpg" after 2 seconds
+                }
+            }, 2000);
+        }
+
+        // Function to display the "BOOM.jpg" image
+        function displayBoomImage() {
+            document.getElementById("boomImage").style.display = "block";
+        }
+
+        // Function to display text with a typing effect
+        function typeText(elementId, text) {
+            let i = 0;
+            const speed = 10; // Adjust typing speed (in milliseconds) as needed
+            const element = document.getElementById(elementId);
+            element.innerHTML = ""; // Clear any existing content
+
+            function typeWriter() {
+                if (i < text.length) {
+                    if (text.charAt(i) === "\n") { // Check for newline character
+                        element.innerHTML += "<br>"; // Insert a line break in HTML
+                    } else {
+                        element.innerHTML += text.charAt(i); // Append one character
+                    }
+                    i++;
+                    setTimeout(typeWriter, speed); // Call the function recursively
+                }
+            }
+            typeWriter();
+        }
+
+        // Function to display stored data with typing effect
+        function displayData() {
+            const formData = JSON.parse(localStorage.getItem("userInputs"));
+
+            if (formData) {
+                const text = `
+Labdien, mani sauc ${formData[0]} slapjais bandīts.
+Es mācos ${formData[1]} klasē, kur mēs risinām pasaules cepumu noslēpumus.
+Es ļoti atvainojos par sagādātajiem ${formData[2]} ${formData[3]}.
+Tas notika tāpēc ka apēdu ${formData[4]} un tas bija tik garšīgi, ka pat zemūdene apstājās, lai aplūkotos.
+Vēlētos mīļajai apkopējai konpensēt par notikušo, jo to dienu viņa izskatījās diezgan ${formData[5]} stāvoklī.
+Man bija jāmūk, jo gaisā lidoja ${formData[6]} fjuu labi ka netrāpīja.
+Tiešām nevēlējos gaiteņa vidū ${formData[7]}, bet nu reizēm ķerās deju kurpes un ko darīt, ja ļoti sagribējās.
+Izsaku lielāko līdzjūtību apkopējai, jo mana ${formData[8]} zilo toņu šmuce bija ļoti smaržīga un šķidra.
+                `;
+                typeText("filledText", text);
+            } else {
+                typeText("filledText", "Nav saglabātu datu.");
+            }
+        }
+
+        // Initialize everything on page load
+        window.onload = function() {
+            setTimeout(displayFirstImage, 1000); // Show the first image after 1 second
+            setTimeout(displayTextBox, 2000); // Show the text box after another second
+            displayData(); // Populate text box with data and typing effect
+        };
+    </script>
+
+    <style>
+        /* General styling for background */
+        body {
+            background-image: url('Elements/back2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Styling for slideshow images */
+        #slideshowImage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 750px; /* Reduced size */
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            display: none; /* Initially hidden */
+        }
+
+        /* Specific styling for "1st.jpg" */
+        #firstImage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 850px; /* Slightly larger size */
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            display: none; /* Initially hidden */
+        }
+
+        /* Styling for the "BOOM.jpg" image */
+        #boomImage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px; /* Large size for emphasis */
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.7); /* Adds a stronger shadow for impact */
+            display: none; /* Initially hidden */
+        }
+
+        /* Styling for the transparent button */
+        #nextButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: transparent; /* Makes the button transparent */
+            color: rgb(79, 9, 163); /* Text color */
+            border: 2px solid rgb(70, 12, 206); /* Optional border for visibility */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #nextButton:hover {
+            background-color: rgb(0, 0, 0); /* Slight hover effect for better UX */
+        }
+
+        /* Styling for the text box */
+        #textBox {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid black;
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Styling for the text inside the box */
+        #filledText {
+            font-family: Arial, sans-serif;
+            line-height: 2;
+            font-size: 18px;
+            color: rgb(66, 3, 3);
+        }
+    </style>
+</head>
+<body>
+    <!-- First Image -->
+    <img id="firstImage" src="Elements/1st.jpg" alt="First Image">
+
+    <!-- Slideshow Image -->
+    <img id="slideshowImage" src="Elements/2nd.jpeg" alt="Slideshow Image">
+
+    <!-- BOOM Image -->
+    <img id="boomImage" src="Elements/BOOM.jpg" alt="BOOM Image">
+
+    <!-- Transparent Button Inside First Image -->
+    <div id="textBox">
+        <div id="filledText"></div>
+        <button id="nextButton" onclick="startSlideshow()">Turpināt</button>
+    </div>
+</body>
+</html>

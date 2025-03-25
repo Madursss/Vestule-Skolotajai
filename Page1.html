@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            var inputs = document.querySelectorAll("ol input, ol select");
+            var inputValues = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].value.trim() === "") {
+                    alert("Lūdzu aizpildiet visus laukumus.");
+                    return false;
+                }
+                inputValues.push(inputs[i].value.trim());
+            }
+            localStorage.setItem("userInputs", JSON.stringify(inputValues));
+            window.location.href = "Page2.html";
+
+            return false;
+        }
+    </script>
+
+    <style>
+        /* General body styling */
+        body {
+            background-image: url('Elements/back2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Styling for the phone-like text box */
+        .phone-box {
+            border: 2px solid black;
+            background-color: rgba(255, 255, 255, 0.95); /* White background for clarity */
+            color: rgb(66, 3, 3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Ensures text starts at the top */
+            text-align: center;
+            width: 350px; /* Set width to mimic a phone */
+            height: auto; /* Automatically adjusts height */
+            margin: 50px auto;
+            padding: 15px;
+            position: relative;
+            border-radius: 25px; /* Rounded edges to resemble a phone */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Adds shadow for depth */
+        }
+
+        /* Header style inside phone box */
+        header {
+            text-align: center;
+            font-size: 18px; /* Smaller font to fit the box */
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Style for the list inside the phone box */
+        ol {
+            list-style-position: inside;
+            padding: 0;
+            text-align: left; /* Aligns text properly */
+            line-height: 1.5; /* Reduces line height for more content space */
+            font-size: 14px; /* Adjust font size to fit within the box */
+            margin: 0; /* Removes any unnecessary spacing */
+        }
+
+        /* Input and select styles */
+        input, select {
+            margin-top: 5px;
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 12px; /* Smaller font for inputs to fit neatly */
+            border: 1px solid rgb(66, 3, 3);
+            border-radius: 5px;
+            width: 100%; /* Full width of the box */
+        }
+
+        /* Styling for the submit button */
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: rgb(66, 3, 3);
+            color: white;
+            font-size: 12px;
+            border: 2px solid rgb(66, 3, 3);
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: rgb(51, 4, 4);
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="
+        text-align: center; 
+        background: rgba(254, 254, 254, 0.5); 
+        padding: 10px; 
+        border-radius: 5px; 
+        display: block; 
+        width: fit-content; 
+        margin: 20px auto;">
+        Ieraksti laukumos sava stāsta elementus
+    </h2>
+
+    <div class="phone-box">
+        <header>Vēstule Skolotājai</header>
+
+        <form onsubmit="return validateForm(event)">
+            <ol>
+                <li>Ievadi savu vārdu <input type="text" required></li>
+                <li>Ievadi ciparu no 1-4 <input type="text" required></li>
+                <li>Izvēlies abos opcijas 
+                    <select required>
+                        <option value="šķidrām">šķidrām</option>
+                        <option value="smirdīgajām">smirdīgajām</option>
+                        <option value="sprāgstošām">sprāgstošām</option>
+                        <option value="asiņainajām">asiņainajām</option>
+                    </select>
+                    <select required>
+                        <option value="Problēmām">Problēmām</option>
+                        <option value="Mēsliem">Mēsliem</option>
+                        <option value="Ķibelēm">Ķibelēm</option>
+                    </select>
+                </li>
+                <li>Ievadi 1 mašīnas detaļu <input type="text" required></li>
+                <li>Ieraksti (Kādā) emocionālajā stāvoklī <input type="text" required></li>
+                <li>Ievadi 1 dzīvnieku <input type="text" required></li>
+                <li>Ievadi darbības vārdu <input type="text" required></li>
+                <li>Ievadi Apstākļa vārdu (kāda?-lielā, mazā,...) <input type="text" required></li>
+            </ol>  
+
+            <button type="submit">Paraksts</button>
+        </form>
+    </div>
+</body>
+</html>
